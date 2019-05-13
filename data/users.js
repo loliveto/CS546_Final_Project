@@ -2,9 +2,21 @@ const mongoCollections = require("./mongoCollections");
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectID;
 
+function idCheck(id){
+    if (!id) throw "You must provide an id.";
+    if (typeof id === "string") {
+        try {
+            id = ObjectId(id);
+        } catch (e) {
+            throw "Please provide a valid ID.";
+        }
+    }
+    return id;
+}
+
 module.exports = {
     async createUser(hashedPassword, profile) {
-        if (!hasedPassword) throw "You must provide a password."
+        if (!hashedPassword) throw "You must provide a password."
         if (typeof hashedPassword != "string") throw "The password must be a string.";
 
         if (!profile) throw "You must provide a profile for the user."
@@ -70,13 +82,13 @@ module.exports = {
 
         if (updatedUser.newPassword){
             if (typeof updatedUser.newPassword != "string") throw "The new hash must be a string.";
-            updatedUserData.hasedPassword = updatedUser.newPassword;
+            updatedUserData.hashedPassword = updatedUser.newPassword;
         } else{
             updatedUserData.name = currentUser.name;
         }
         
         if (updatedUser.newProfile){
-            if (typeof updatedAnimal.newProfile != "object") throw "The new profile must be a object.";
+            if (typeof updatedUser.newProfile != "object") throw "The new profile must be a object.";
             updatedUserData.profile = updatedUser.newProfile;
         } else{
             updatedUserData.profile = currentUser.newProfile;

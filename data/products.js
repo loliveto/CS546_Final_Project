@@ -2,6 +2,18 @@ const mongoCollections = require("./mongoCollections");
 const products = mongoCollections.products;
 const ObjectId = require('mongodb').ObjectID;
 
+function idCheck(id){
+    if (!id) throw "You must provide an id.";
+    if (typeof id === "string") {
+        try {
+            id = ObjectId(id);
+        } catch (e) {
+            throw "Please provide a valid ID.";
+        }
+    }
+    return id;
+}
+
 module.exports = {
     async createProduct(productName, brand, effects, relatedProducts, price, reviews) {
         if (!productName) throw "You must provide a product name."
@@ -11,16 +23,16 @@ module.exports = {
         if (typeof brand != "string") throw "The brand type must be a string.";
 
         if (!effects) throw "You must provide a effects for the product."
-        if (typeof effects != "list") throw "The effects type must be a list.";
+        if (typeof effects != "object") throw "The effects type must be an object.";
 
         if (!relatedProducts) throw "You must provide related products for the product."
-        if (typeof relatedProducts != "list") throw "The related products type must be a list.";
+        if (typeof relatedProducts != "object") throw "The related products type must be an object.";
 
-        if (!price) throw "You must provide a price for the user."
+        if (!price) throw "You must provide a price for the product."
         if (typeof price != "number") throw "The price must be a number.";
 
-        if (!reviews) throw "You must provide reviews for the user."
-        if (typeof reviews != "list") throw "The reviews type must be a list.";
+        if (!reviews) throw "You must provide reviews for the product."
+        if (typeof reviews != "object") throw "The reviews type must be an object.";
 
         let newProduct = {
             productName: productName,
@@ -31,10 +43,10 @@ module.exports = {
             reviews: reviews
         };
 
-        const productCollection = await users();
+        const productCollection = await products();
 
         const insertInfo = await productCollection.insertOne(newProduct);
-        if (insertInfo.insertedCount === 0) throw "Could not add user.";
+        if (insertInfo.insertedCount === 0) throw "Could not add product.";
 
         const newId = insertInfo.insertedId;
 
@@ -84,29 +96,29 @@ module.exports = {
         const currentProduct = await this.get(id);
         const updatedProductData = {};
 
-        // productName: productName,
-        //     brand: brand,
-        //     effects: effects,
-        //     relatedProducts: relatedProducts,
-        //     price: price,
-        //     reviews: reviews
-
         if (updatedProduct.newProductName){
-            if (typeof updatedUser.newProductName != "string") throw "The new name must be a string.";
+            if (typeof updatedProduct.newProductName != "string") throw "The new name must be a string.";
             updatedProductData.productName = updatedProduct.newProductName;
         } else{
-            updatedUserData.productName = currentProduct.productName;
+            updatedProductData.productName = currentProduct.productName;
         }
         
         if (updatedProduct.newEffects){
-            if (typeof updatedProduct.newEffects != "list") throw "The new effects must be a list.";
+            if (typeof updatedProduct.newEffects != "object") throw "The new effects must be an object.";
             updatedProductData.effects = updatedProduct.newEffects;
         } else{
             updatedProductData.effects = currentProduct.effects;
         }
 
+        if (updatedProduct.newBrand){
+            if (typeof updatedProduct.newBrand != "string") throw "The new effects must be a string.";
+            updatedProductData.brand = updatedProduct.newBrand;
+        } else{
+            updatedProductData.brand = currentProduct.brand;
+        }
+
         if (updatedProduct.newRelatedProducts){
-            if (typeof updatedProduct.newEffects != "list") throw "The new related projects must be a list.";
+            if (typeof updatedProduct.newEffects != "object") throw "The new related projects must be an object.";
             updatedProductData.relatedProducts = updatedProduct.newRelatedProducts;
         } else{
             updatedProductData.relatedProducts = currentProduct.relatedProducts;
@@ -120,7 +132,7 @@ module.exports = {
         }
 
         if (updatedProduct.newReviews){
-            if (typeof updatedProduct.newReviews != "list") throw "The new review must be a list.";
+            if (typeof updatedProduct.newReviews != "object") throw "The new review must be an object.";
             updatedProductData.reviews = updatedProduct.newReviews;
         } else{
             updatedProductData.reviews = currentProduct.reviews;
