@@ -10,5 +10,6 @@ module.exports = async () => {
     _connection = await MongoClient.connect(mongoConfig.serverUrl);
     _db = await _connection.db(mongoConfig.database);
   }
+}
 
   return _db;
