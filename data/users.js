@@ -43,7 +43,7 @@ module.exports = {
 
         const newId = insertInfo.insertedId;
 
-        const user = await this.get(newId);
+        const user = await this.getUserById(newId);
 
         return user;
     },
@@ -54,7 +54,7 @@ module.exports = {
         return userList;
     },
 
-    async get(id) {
+    async getUserById(id) {
         id = idCheck(id);
 
         const userCollection = await users();
@@ -65,11 +65,29 @@ module.exports = {
         return user;
     },
 
+    async getUserByName(name) {
+        const userCollection = await users();
+        const userList = await userCollection.find({}).toArray();
+
+        let ind = 0;
+        let userInd = -1;
+        userList.forEach(user =>{
+            if(user.profile.name === name){
+                userInd = ind;
+            }
+            ind = ind + 1;
+        });
+
+        if(userInd < 0) throw "User not found";
+
+        return userList[userInd];
+    },
+
     async removeUser(id) {
         id = idCheck(id);
 
         const userCollection = await users();
-        const data = await this.get(id);
+        const data = await this.getUserById(id);
         const deletionInfo = await userCollection.removeOne({ _id: id });
 
         if (deletionInfo.deletedCount === 0) {
@@ -88,7 +106,7 @@ module.exports = {
     async updateUser(id, updatedUser) {
         id = idCheck(id);
         const userCollection = await users();
-        const currentUser = await this.get(id);
+        const currentUser = await this.getUserById(id);
         const updatedUserData = { profile: {} };
 
         if (updatedUser.newPassword) {
@@ -126,7 +144,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     },
 
     //add previous search
@@ -135,7 +153,7 @@ module.exports = {
         if (!search) throw "You must provide a search for the user."
         if (typeof search != "string") throw "The search type must be a string.";
 
-        updatedUser = await this.get(id);
+        updatedUser = await this.getUserById(id);
         const userCollection = await users();
         updatedUser.profile.prevSearches.push(search);
 
@@ -152,7 +170,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     },
 
     //add a like
@@ -161,7 +179,7 @@ module.exports = {
         if (!product) throw "You must provide a product for the user."
         if (typeof product != "string") throw "The product type must be a string.";
 
-        updatedUser = await this.get(id);
+        updatedUser = await this.getUserById(id);
         const userCollection = await users();
         updatedUser.profile.likes.push(product);
 
@@ -178,7 +196,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     },
 
     //remove a like
@@ -187,16 +205,16 @@ module.exports = {
         if (!product) throw "You must provide a product to be removed."
         if (typeof product != "string") throw "The product type must be a string.";
 
-        updatedUser = await this.get(id);
+        updatedUser = await this.getUserById(id);
         const userCollection = await users();
 
         let index = updatedUser.profile.likes.indexOf(product);
-        if(index > -1){
+        if (index > -1) {
             updatedUser.profile.likes.splice(index, 1);
-        }else{
+        } else {
             throw "Product not found in likes";
         }
-        
+
         let updateCommand = {
             $set: updatedUser
         };
@@ -210,7 +228,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     },
 
     //add a dislike
@@ -219,7 +237,7 @@ module.exports = {
         if (!product) throw "You must provide a product for the user."
         if (typeof product != "string") throw "The product type must be a string.";
 
-        updatedUser = await this.get(id);
+        updatedUser = await this.getUserById(id);
         const userCollection = await users();
         updatedUser.profile.dislikes.push(product);
 
@@ -236,7 +254,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     },
 
     //remove a dislike
@@ -245,16 +263,16 @@ module.exports = {
         if (!product) throw "You must provide a product to be removed."
         if (typeof product != "string") throw "The product type must be a string.";
 
-        updatedUser = await this.get(id);
+        updatedUser = await this.getUserById(id);
         const userCollection = await users();
 
         let index = updatedUser.profile.dislikes.indexOf(product);
-        if(index > -1){
+        if (index > -1) {
             updatedUser.profile.dislikes.splice(index, 1);
-        }else{
+        } else {
             throw "Product not found in dislikes";
         }
-        
+
         let updateCommand = {
             $set: updatedUser
         };
@@ -268,6 +286,6 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getUserById(id);
     }
 };

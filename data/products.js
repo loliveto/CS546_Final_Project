@@ -47,7 +47,7 @@ module.exports = {
 
         const newId = insertInfo.insertedId;
 
-        const product = await this.get(newId);
+        const product = await this.getProductById(newId);
         return product;
     },
 
@@ -57,7 +57,7 @@ module.exports = {
         return productList;
     },
 
-    async get(id) {
+    async getProductById(id) {
         id = idCheck(id);
 
         const productCollection = await products();
@@ -72,7 +72,7 @@ module.exports = {
         id = idCheck(id);
 
         const productCollection = await products();
-        const data = await this.get(id);
+        const data = await this.getProductById(id);
         const deletionInfo = await productCollection.removeOne({ _id: id });
 
         if (deletionInfo.deletedCount === 0) {
@@ -91,7 +91,7 @@ module.exports = {
     async updateProduct(id, updatedProduct) {
         id = idCheck(id);
         const productCollection = await products();
-        const currentProduct = await this.get(id);
+        const currentProduct = await this.getProductById(id);
         const updatedProductData = {};
 
         if (updatedProduct.newProductName){
@@ -144,7 +144,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.gegetProductByIdt(id);
     },
 
     //add a review
@@ -157,7 +157,7 @@ module.exports = {
         if(!review) throw "You must provide a review.";
         if(typeof review != "string") throw "Review must be a string.";
 
-        updatedProduct = await this.get(id);
+        updatedProduct = await this.getProductById(id);
         const productCollection = await products();
 
         let reviewObj = {
@@ -181,7 +181,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getProductById(id);
     },
 
     //remove a review
@@ -191,7 +191,7 @@ module.exports = {
         if(!revId) throw "You must provide a review ID.";
         if(typeof revId != "string") throw "Review ID must be a string.";
 
-        updatedProduct = await this.get(id);
+        updatedProduct = await this.getProductById(id);
         const productCollection = await products();
 
         let ind = 0;
@@ -221,7 +221,7 @@ module.exports = {
             console.log("No changes were made.");
         }
 
-        return await this.get(id);
+        return await this.getProductById(id);
     }
 
 };
