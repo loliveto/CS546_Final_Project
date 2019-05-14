@@ -148,9 +148,80 @@ module.exports = {
     },
 
     //add a review
-    async addReview(poster, review) {
+    async addReview(id, poster, review) {
+        id = idCheck(id);
+
+        if(!poster) throw "You must provide a poster.";
+        if(typeof poster != "object") throw "Poster must be an object.";
+
+        if(!review) throw "You must provide a review.";
+        if(typeof review != "string") throw "Review must be a string.";
+
+        updatedProduct = await this.get(id);
+        const productCollection = await products();
+
+        let reviewObj = {
+            _id: ObjectId(),
+            profile: poster,
+            review: review
+        }
+
+        updatedProduct.reviews.push(reviewObj);
+
+        let updateCommand = {
+            $set: updatedProduct
+        };
+        const query = {
+            _id: updatedProduct._id
+        };
+
+        const updatedInfo = await productCollection.updateOne(query, updateCommand);
+
+        if (updatedInfo.modifiedCount === 0) {
+            console.log("No changes were made.");
+        }
+
+        return await this.get(id);
+    },
+
+    //remove a review
+    async removeReview(prodId, revId) {
+        id = idCheck(prodId);
+
+        if(!revId) throw "You must provide a review ID.";
+        if(typeof revId != "string") throw "Review ID must be a string.";
+
+        updatedProduct = await this.get(id);
+        const productCollection = await products();
+
+        let ind = 0;
+        let revInd;
+        updatedProduct.reviews.forEach(rev =>{
+            let idstring = rev._id.toString();
+            if(idstring === revId){
+                revInd = ind;
+            }
+            ind = ind + 1;
+        });
+
+        if(!revInd) throw "Review not found";
+
+        updatedProduct.reviews.splice(revInd, 1);
         
+        let updateCommand = {
+            $set: updatedProduct
+        };
+        const query = {
+            _id: updatedProduct._id
+        };
+
+        const updatedInfo = await productCollection.updateOne(query, updateCommand);
+
+        if (updatedInfo.modifiedCount === 0) {
+            console.log("No changes were made.");
+        }
+
+        return await this.get(id);
     }
 
-    //remove a review ?
 };

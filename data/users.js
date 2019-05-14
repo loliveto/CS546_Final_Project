@@ -100,11 +100,13 @@ module.exports = {
 
         if (updatedUser.newName) {
             if (typeof updatedUser.newName != "string") throw "The new name must be a string.";
+            updatedUserData.profile._id = currentUser.profile._id;
             updatedUserData.profile.name = updatedUser.newName;
             updatedUserData.profile.prevSearches = currentUser.profile.prevSearches;
             updatedUserData.profile.likes = currentUser.profile.likes;
             updatedUserData.profile.dislikes = currentUser.profile.dislikes;
         } else {
+            updatedUserData.profile._id = currentUser.profile._id;
             updatedUserData.profile.name = currentUser.profile.name;
             updatedUserData.profile.prevSearches = currentUser.profile.prevSearches;
             updatedUserData.profile.likes = currentUser.profile.likes;
