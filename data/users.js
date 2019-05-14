@@ -15,16 +15,25 @@ function idCheck(id){
 }
 
 module.exports = {
-    async createUser(hashedPassword, profile) {
+    async createUser(hashedPassword, name) {
         if (!hashedPassword) throw "You must provide a password."
         if (typeof hashedPassword != "string") throw "The password must be a string.";
 
-        if (!profile) throw "You must provide a profile for the user."
-        if (typeof profile != "object") throw "The profile type must be an object.";
+        if (!name) throw "You must provide a name for the user."
+        if (typeof name != "string") throw "The name type must be a string.";
+
+        let id = ObjectId();
 
         let newUser = {
+            _id: id,
             hashedPassword: hashedPassword,
-            profile: profile
+            profile: {
+                _id: id,
+                name: name,
+                prevSearches: [],
+                likes: [],
+                dislikes: []
+            }
         };
 
         const userCollection = await users();
@@ -35,6 +44,7 @@ module.exports = {
         const newId = insertInfo.insertedId;
 
         const user = await this.get(newId);
+
         return user;
     },
 
@@ -74,24 +84,31 @@ module.exports = {
         return returnObj;
     },
 
+    //This will only update name and password
     async updateUser(id, updatedUser) {
         id = idCheck(id);
         const userCollection = await users();
         const currentUser = await this.get(id);
-        const updatedUserData = {};
+        const updatedUserData = {profile: {}};
 
         if (updatedUser.newPassword){
             if (typeof updatedUser.newPassword != "string") throw "The new hash must be a string.";
             updatedUserData.hashedPassword = updatedUser.newPassword;
         } else{
-            updatedUserData.name = currentUser.name;
+            updatedUserData.hashedPassword = currentUser.hashedPassword;
         }
         
-        if (updatedUser.newProfile){
-            if (typeof updatedUser.newProfile != "object") throw "The new profile must be a object.";
-            updatedUserData.profile = updatedUser.newProfile;
+        if (updatedUser.newName){
+            if (typeof updatedUser.newName != "string") throw "The new name must be a string.";
+            updatedUserData.profile.name = updatedUser.newName;
+            updatedUserData.profile.prevSearches = currentUser.profile.prevSearches;
+            updatedUserData.profile.likes = currentUser.profile.likes;
+            updatedUserData.profile.dislikes = currentUser.profile.dislikes;
         } else{
-            updatedUserData.profile = currentUser.newProfile;
+            updatedUserData.profile.name = currentUser.profile.name;
+            updatedUserData.profile.prevSearches = currentUser.profile.prevSearches;
+            updatedUserData.profile.likes = currentUser.profile.likes;
+            updatedUserData.profile.dislikes = currentUser.profile.dislikes;
         }
         
         let updateCommand = {
@@ -109,4 +126,14 @@ module.exports = {
 
         return await this.get(id);
     }
+
+    //add previous search
+
+    //add a like
+
+    //remove a like
+
+    //add a dislike
+
+    //remove a dislike
 };

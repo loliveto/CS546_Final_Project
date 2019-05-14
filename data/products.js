@@ -15,7 +15,7 @@ function idCheck(id){
 }
 
 module.exports = {
-    async createProduct(productName, brand, effects, relatedProducts, price, reviews) {
+    async createProduct(productName, brand, effects, relatedProducts, price) {
         if (!productName) throw "You must provide a product name."
         if (typeof productName != "string") throw "The product name must be a string.";
 
@@ -31,16 +31,13 @@ module.exports = {
         if (!price) throw "You must provide a price for the product."
         if (typeof price != "number") throw "The price must be a number.";
 
-        if (!reviews) throw "You must provide reviews for the product."
-        if (typeof reviews != "object") throw "The reviews type must be an object.";
-
         let newProduct = {
             productName: productName,
             brand: brand,
             effects: effects,
             relatedProducts: relatedProducts,
             price: price,
-            reviews: reviews
+            reviews: []
         };
 
         const productCollection = await products();
@@ -90,6 +87,7 @@ module.exports = {
         return returnObj;
     },
 
+    //update anything except the reviews
     async updateProduct(id, updatedProduct) {
         id = idCheck(id);
         const productCollection = await products();
@@ -131,12 +129,7 @@ module.exports = {
             updatedProductData.price = currentProduct.price;
         }
 
-        if (updatedProduct.newReviews){
-            if (typeof updatedProduct.newReviews != "object") throw "The new review must be an object.";
-            updatedProductData.reviews = updatedProduct.newReviews;
-        } else{
-            updatedProductData.reviews = currentProduct.reviews;
-        }
+        updatedProductData.reviews = currentProduct.reviews;
         
         let updateCommand = {
             $set: updatedProductData
@@ -153,4 +146,8 @@ module.exports = {
 
         return await this.get(id);
     }
+
+    //add a review
+
+    //remove a review ?
 };
