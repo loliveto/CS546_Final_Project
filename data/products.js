@@ -145,9 +145,12 @@ module.exports = {
         }
 
         return await this.get(id);
-    }
+    },
 
     //add a review
+    async addReview(poster, review) {
+        
+    }
 
     //remove a review ?
 };
