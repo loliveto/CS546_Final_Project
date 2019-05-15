@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const data = require("../data/users");
+const productData = require("../data/products");
 const bcrypt = require("bcrypt");
 const path = require("path");
 
@@ -17,7 +18,7 @@ router.get('/', async(req,res) => {
 // for logging in
 router.post("/login", async(req,res) => {
 	const un = req.body.username;
-	const searchforuser = await data.getByUsername(un);
+	const searchforuser = await data.getUserByName(un);
 
 	// user doesn't exist in database
 	if (!searchforuser) {
@@ -40,15 +41,14 @@ router.post("/login", async(req,res) => {
 // review past searches, 
 router.get("/private", async(req, res) => {
 	if (req.cookies && req.cookies.AuthCookie) {
-		const un = await data.getById(req.cookies.AuthCookie);
+		const un = await data.getUserById(req.cookies.AuthCookie);
 		if (un) {
-			res.render('layouts/main',
+			res.render('pages/profile',
 			{
-				username: un.username,
-				name: un.name,
-				prev_searches: un.previousSearches,
-				likes: un.likes,
-				dislikes: un.dislikes
+				name: un.profile.name,
+				prev_searches: un.profile.previousSearches,
+				likes: un.profile.likes,
+				dislikes: un.profile.dislikes
 			});
 		}
 	}
@@ -71,9 +71,9 @@ router.get("/browse", async (req, res) => {
 //see specific product (product.handlebars in static folder)
 //need getProductById method
 router.get("/:id", async (req, res) => {
-	const product = await data.getProductById(req.params.id);
+	const product = await productData.getProductById(req.params.id);
 	if (product) {
-		res.render("layouts/product", 
+		res.render('pages/product', 
 			{
 				productName: product.productName,
 				brand: product.brand,

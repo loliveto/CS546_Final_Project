@@ -1,0 +1,42 @@
+<main>
+    <h1>{{productName}}</h1>
+    <h2>{{brand}}</h2>
+    <p>Effects: </p>
+    {{#if effects}}
+    <ul>
+        {{#each effects}}
+        <li>
+            {{this}}
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>None</p>
+    {{/if}}
+    <p>Price: {{price}}</p>
+    <p>Reviews:</p>
+    {{#if reviews}}
+    <ul>
+        {{#each reviews}}
+        <li>
+            <p>{{profile.name}}</p>
+            <p>{{review}}</p>
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>No reviews yet</p>
+    {{/if}}
+    <p>Related Products</p>
+    {{#if relatedProducts}}
+    <ul>
+        {{#each relatedProducts}}
+        <li>
+            {{this}}
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>None</p>
+    {{/if}}
+</main>

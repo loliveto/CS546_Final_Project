@@ -24,6 +24,7 @@ app.listen(3000, () => {
 async function main() {
     const db = await connection();
 
+    
     try {
     } catch (e) {
         console.log(e);
