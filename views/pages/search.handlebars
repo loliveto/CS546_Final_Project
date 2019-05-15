@@ -1,0 +1,24 @@
+<h1>search for a product</h1>
+<main>
+    <form>
+    <h2>search by:</h2>
+    <input type="radio" name="searchtype" value="brand" checked> brand<br>
+    <input type="radio" name="searchtype" value="effect"> effect<br>
+    <input type="radio" name="searchtype" value="name"> name<br><br>
+    <h2>keywords: </h2>
+    <input type="text" name="keywords">
+    <br><br>
+    <input type="submit" value="search">
+    </form>
+    <br>
+    <h2>suggested searches for you are: </h2>
+    <p><label>previously, you have searched for: {{prevsearches}}</label></p> <br>
+</main>
+<footer>
+	<h2>or, if you don't want to search for anything: </h2>
+    
+    <ol>
+        <li><a href="/private">return to your profile?</a></li>
+        <li><a href="/logout">log out now?</a></li>
+    </ol>
+</footer>
