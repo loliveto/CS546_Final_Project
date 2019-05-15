@@ -63,10 +63,23 @@ router.get("/logout", async (req, res) => {
 	res.render("static/login", {layout: false, messages: "you have been logged out."})
 });
 
+/*
 //browse database (database.handlebars? in static folder maybe)
 router.get("/browse", async (req, res) => {
 	res.render("static/database", {layout: false});
 });
+*/
+
+// form page to let a user search for a product in the database
+router.post("/search", async (req, res) => {
+	const term = req.body;
+	if (!term) {
+		res.render("static/search", {layout: false, messages: "you need to enter a term to search."});
+	}
+	else {
+		// TODO: implement the dropdown ?
+	}
+})
 
 //see specific product (product.handlebars in static folder)
 //need getProductById method
