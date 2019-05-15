@@ -73,11 +73,16 @@ router.get("/browse", async (req, res) => {
 // form page to let a user search for a product in the database
 router.post("/search", async (req, res) => {
 	const term = req.body;
-	if (!term) {
-		res.render("static/search", {layout: false, messages: "you need to enter a term to search."});
+	if (req.cookies && req.cookies.AuthCookie) {
+		if (!term) {
+			res.render("static/search", {layout: false, messages: "you need to enter a term to search."});
+		}
+		else {
+			// TODO: implement the dropdown ?
+		}
 	}
 	else {
-		// TODO: implement the dropdown ?
+		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
 	}
 })
 
