@@ -7,7 +7,7 @@ const path = require("path");
 
 // thinking that this path should just render the main page
 router.get('/', async(req,res) => {
-	console.log(req.cookies);
+	//console.log(req.cookies);
 	if (req.cookies && req.cookies.AuthCookie) {
 		res.redirect("/private");
 	}
@@ -19,8 +19,11 @@ router.get('/', async(req,res) => {
 // for logging in
 router.post("/login", async(req,res) => {
 	const un = req.body.name;
-	console.log(req.body);
-	const searchforuser = await data.getUserByName(un);
+	//console.log(req.body);
+	let searchforuser;
+	try {
+		searchforuser = await data.getUserByName(un);
+	} catch (e) {}
 
 	// user doesn't exist in database
 	if (!searchforuser) {
@@ -48,7 +51,11 @@ router.post("/signup", async(req, res) => {
 // review past searches, 
 router.get("/private", async(req, res) => {
 	if (req.cookies && req.cookies.AuthCookie) {
-		const un = await data.getUserById(req.cookies.AuthCookie);
+		let un;
+		try{
+			un = await data.getUserById(req.cookies.AuthCookie);
+		}catch (e) {}
+
 		if (un) {
 			res.render('pages/profile',
 			{
@@ -76,41 +83,5 @@ router.get("/browse", async (req, res) => {
 	res.render("static/database", {layout: false});
 });
 */
-
-// form page to let a user search for a product in the database
-router.post("/search", async (req, res) => {
-	const term = req.body;
-	if (req.cookies && req.cookies.AuthCookie) {
-		if (!term) {
-			res.render("pages/search", {layout: false, messages: "you need to enter a term to search."});
-		}
-		else {
-			// TODO: implement the dropdown ?
-		}
-	}
-	else {
-		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
-	}
-})
-
-//see specific product (product.handlebars in static folder)
-//need getProductById method
-router.get("/:id", async (req, res) => {
-	const product = await productData.getProductById(req.params.id);
-	if (product) {
-		res.render('pages/product', 
-			{
-				productName: product.productName,
-				brand: product.brand,
-				effects: product.effects,
-				price: product.price,
-				reviews: product.reviews
-			});
-	}
-	else {
-		res.status(404).json({layout: false, messages: "product not found."})
-	}
-
-});
 
 module.exports = router;
