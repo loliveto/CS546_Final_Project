@@ -12,6 +12,7 @@ router.get("/:id", async (req, res) => {
 	if (product) {
 		res.render('pages/product', 
 			{
+				productid: product._id,
 				productName: product.productName,
 				brand: product.brand,
 				effects: product.effects,
@@ -41,6 +42,23 @@ router.post("/search", async (req, res) => {
 	}
 });
 
+//writing a review for a specific product
+router.get("/review/:id", async (req, res) => {
+	if (req.cookies && req.cookies.AuthCookie) {
+		const product = await productData.getProductById(req.params.id);
+		res.render("pages/createReview", {productName: product.productName, productid: product._id})
+	} else {
+		res.render("pages/error");
+	}
 
+});
+
+router.post("/review/:id", async (req, res) => {
+	let sentbody = req.body;
+	user = await data.getUserById(req.cookies.AuthCookie);
+	await productData.addReview(req.params.id, user.profile, sentbody.review)
+	let url = "/products/" + req.params.id;
+	res.redirect(url);
+});
 
 module.exports = router;
