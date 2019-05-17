@@ -2,11 +2,13 @@ body {
   background: #f7f7f7;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 20pt;
+  text-align: center;
 }
 
 main {
   max-width: 75%;
   margin: auto;
+  text-align: center;
 }
 
 header {
