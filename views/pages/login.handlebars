@@ -1,0 +1,26 @@
+<h1>Welcome to Skincare Database!</h1>
+<h2>Login</h2>
+<form id="login-form" action="/login" method="POST">
+    <label for="name">
+        Username
+        <input id="name" type="text" name="name" placeholder="Username" class="full-width-input" />
+    </label>
+    <label for="password">
+        Password
+        <input id="password" type="password" name="password" placeholder="Password" class="full-width-input" />
+    </label>
+    <button type="submit">Login</button>
+</form>
+<h2>Or Sign Up!</h2>
+<form id="signup-form" action="/signup" method="POST">
+    <label for="name">
+        Username
+        <input id="name" type="text" name="name" placeholder="Username" class="full-width-input" />
+    </label>
+    <label for="password">
+        Password
+        <input id="password" type="password" name="password" placeholder="Password" class="full-width-input" />
+    </label>
+    <button type="submit">Sign up</button>
+</form>
+<p class="error">{{error}}</p>

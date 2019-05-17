@@ -7,34 +7,41 @@ const path = require("path");
 
 // thinking that this path should just render the main page
 router.get('/', async(req,res) => {
+	console.log(req.cookies);
 	if (req.cookies && req.cookies.AuthCookie) {
 		res.redirect("/private");
 	}
 	else {
-		res.render("static/login", {layout:false});
+		res.render("pages/login", {layout:false});
 	}
 });
 
 // for logging in
 router.post("/login", async(req,res) => {
-	const un = req.body.username;
+	const un = req.body.name;
+	console.log(req.body);
 	const searchforuser = await data.getUserByName(un);
 
 	// user doesn't exist in database
 	if (!searchforuser) {
-		res.render("static/login", {layout:false, messages: "error: we don't know a user with that name."});
+		res.render("pages/login", {layout:false, messages: "error: we don't know a user with that name."});
 		return;
 	}
 
 	const pw = req.body.password;
-	const vp = await bcrypt.compare(password, searchforuser.hashedPassword);
+	const vp = await bcrypt.compare(pw, searchforuser.hashedPassword);
 	if (vp) {
 		res.cookie("AuthCookie", searchforuser._id, { expires: new Date(Date.now() + 99999) });
 		res.redirect("/private");
 	}
 	else {
-		res.render("static/login", {layout: false}, {messages: "invalid password entered."});
+		res.render("pages/login", {messages: "invalid password entered."});
 	}
+});
+
+//creating an account
+router.post("/signup", async(req, res) => {
+
 });
 
 // when a user logs in, they should be able taken to their profile page, where they can
@@ -60,7 +67,7 @@ router.get("/private", async(req, res) => {
 //allows user to logout (logout.handlebars)
 router.get("/logout", async (req, res) => {
 	res.clearCookie("AuthCookie");
-	res.render("static/login", {layout: false, messages: "you have been logged out."})
+	res.render("pages/login", {layout: false, messages: "you have been logged out."})
 });
 
 /*
@@ -75,7 +82,7 @@ router.post("/search", async (req, res) => {
 	const term = req.body;
 	if (req.cookies && req.cookies.AuthCookie) {
 		if (!term) {
-			res.render("static/search", {layout: false, messages: "you need to enter a term to search."});
+			res.render("pages/search", {layout: false, messages: "you need to enter a term to search."});
 		}
 		else {
 			// TODO: implement the dropdown ?
