@@ -2,6 +2,7 @@ const products = require('./products');
 const users = require('./users');
 const connection = require('./mongoConnection');
 
+// creating products for the database
 async function main() {
 	const serum_greenteaseed = await products.createProduct("intensive hydrating serum with green tea seed", "innisfree", ["hydrating", "moisturizing"], ["pore cleaning toner with volcanic cluster", "my real squeeze mask 5-pack"], 27.00);
 
