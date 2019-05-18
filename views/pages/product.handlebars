@@ -1,62 +1,62 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>Product Information</title>
+        <link rel="stylesheet" href="../../public/site.css">
+    </head>
 
-<head>
-    <title>Product Information</title>
-    <link rel="stylesheet" href="../../public/site.css">
-</head>
-
-<body>
-    <main>
-        <img src="{{image}}" alt="this image isn't loading, but we promise it's beautiful!">
-        <h1>{{productName}}</h1>
-        <h2>Brand: {{brand}}</h2>
-        <p>Effects: </p>
-        {{#if effects}}
-        <ul>
-            {{#each effects}}
-            <li>
-                {{this}}
-            </li>
-            {{/each}}
-        </ul>
-        {{else}}
-        <p>None</p>
-        {{/if}}
-        <p>Price: {{price}}</p>
-        <p>Reviews:</p>
-        {{#if reviews}}
-        <ul>
-            {{#each reviews}}
-            <li>
-                <p>{{profile.name}}</p>
-                <p>{{review}}</p>
-            </li>
-            {{/each}}
-        </ul>
-        {{else}}
-        <p>No reviews yet</p>
-        {{/if}}
-        <p>Related Products</p>
-        {{#if relatedProducts}}
-        <ul>
-            {{#each relatedProducts}}
-            <li>
-                {{this}}
-            </li>
-            {{/each}}
-        </ul>
-        {{else}}
-        <p>None</p>
-        {{/if}}
-        <a href="/products/review/{{productid}}">Write a review!</a>
-    </main>
-    <footer>
-        <h2>or, if you don't want to search for anything: </h2>
-        <ol>
-            <li><a href="/private">return to your profile?</a></li>
-            <li><a href="/logout">log out now?</a></li>
-        </ol>
-    </footer>
-</body>
+    <body>
+        <main>
+            <img src="{{image}}" alt="this image isn't loading, but we promise it's beautiful!">
+            <h1>{{productName}}</h1>
+            <h2>Brand: {{brand}}</h2>
+            <p>Effects: </p>
+            {{#if effects}}
+            <ul>
+                {{#each effects}}
+                <li>
+                    {{this}}
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>None</p>
+            {{/if}}
+            <p>Price: {{price}}</p>
+            <p>Reviews:</p>
+            {{#if reviews}}
+            <ul>
+                {{#each reviews}}
+                <li>
+                    <p>{{profile.name}}</p>
+                    <p>{{review}}</p>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>No reviews yet</p>
+            {{/if}}
+            <p>Related Products</p>
+            {{#if relatedProducts}}
+            <ul>
+                {{#each relatedProducts}}
+                <li>
+                    {{this}}
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>None</p>
+            {{/if}}
+            <a href="/products/review/{{productid}}">Write a review!</a>
+        </main>
+        <footer>
+            <h2>or, if you don't want to search for anything: </h2>
+            <ol>
+                <li><a href="/private">return to your profile?</a></li>
+                <li><a href="/logout">log out now?</a></li>
+            </ol>
+        </footer>
+    </body>
 
 </html>
