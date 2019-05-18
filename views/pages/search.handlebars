@@ -1,9 +1,21 @@
 <h1>search for a product</h1>
 <main>
-	<form action = "/search" method = "POST" id = "search-form">
-	<input type="text" id = "keywords" name="keywords">
-	<button type="submit">search</button>
-</form>
+	<form action="/search" method="POST" id="search-form">
+		<input type="text" id="keywords" name="keywords">
+		<button type="submit">search</button>
+	</form>
+	{{messages}}
+	{{#if resultList}}
+	<ul>
+		{{#each resultList}}
+		<li>
+			<a href="/products/{{_id}}">{{productName}}</a>
+		</li>
+		{{/each}}
+	</ul>
+	{{else}}
+	<p class="not-found">We're sorry, but no results were found for {{term}}.</p>
+	{{/if}}
 	<br>
 	<h2>suggested searches for you are: </h2>
 	<p><label>previously, you have searched for: {{prevsearches}}</label></p> <br>
@@ -12,7 +24,7 @@
 	<h2>or, if you don't want to search for anything: </h2>
 
 	<ol>
-	<li><a href="/private">return to your profile?</a></li>
-	<li><a href="/logout">log out now?</a></li>
+		<li><a href="/private">return to your profile?</a></li>
+		<li><a href="/logout">log out now?</a></li>
 	</ol>
 </footer>

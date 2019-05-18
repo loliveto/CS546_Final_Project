@@ -122,28 +122,30 @@ router.get("/search", async (req, res) => {
 router.post("/search", async (req, res) => {
 	const term = req.body.keywords;
 	const plist = await productData.getAllProducts();
+	let reslist = [];
 	if (req.cookies && req.cookies.AuthCookie) {
 		if (!term) {
 			res.render("pages/search", {messages: "you need to enter a term to search."});
 		}
 		else {
-			for (var i = 0; i < plist.length; i++) {
-				if (plist[i].productName.includes(term)) {
-					const product = plist[i];
-					res.render('pages/product', 
-						{
-							productid: product._id,
-							productName: product.productName,
-							brand: product.brand,
-							effects: product.effects,
-							price: product.price,
-							reviews: product.reviews
-						});
-					return;
+			plist.forEach(prod => {
+				console.log(prod);
+				if(prod.productName === term || prod.brand === term){
+					reslist.push(prod);
+				}else{
+					prod.effects.forEach(ef => {
+						if(ef === term){
+							reslist.push(prod);
+						}
+					})
 				}
-			}
+			});
 		}
-		
+		if (reslist.length == 0) {
+			res.render("pages/search", {term: term});
+		}else{
+			res.render("pages/search",{resultList: reslist});
+		}
 	}
 	else {
 		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
