@@ -4,16 +4,20 @@
     <div class="proflab">
         <p>name: {{name}}</p>
     </div>
+
     <div class="proflab">
         <p>previously, you have searched for:</p>
-    </div>
-    -{{#each prevsearches}}{{this}}-{{/each}}
+    {{#each prevsearches}} {{this}} // {{/each}}
+     </div>
+
     <div class="proflab">
         <p>your likes: {{likes}}</p>
     </div>
+
     <div class="proflab">
         <p>your dislikes: {{dislikes}}</p>
     </div>
+
 </main>
 <footer>
     <h2>what would you like to do next, {{name}}?</h2>
