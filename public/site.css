@@ -1,6 +1,6 @@
 body {
-  background: #f7f7f7;
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  background: #dee8f7;
+  font-family: Helvetica, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 20pt;
   text-align: center;
 }
@@ -60,13 +60,14 @@ p {
   border-bottom: 1px dashed #333;
 }
 
-label {
-  font-weight: bold;
-  /*font-: underline;*/
-}
-
 img {
   float: right;
   height: 700px;
   width: 700px;
+}
+
+/* profile attributes */
+#proflab {
+  font-weight: bold;
+  text-decoration: underline;
 }
