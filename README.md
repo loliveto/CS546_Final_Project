@@ -6,7 +6,7 @@ a website where you can search for skincare products across different brands for
 
 to run:
 - npm run seed
-- ensure all dependencies are present.
+- ensure all dependencies are present, npm install the ones that aren't, if any.
 - node app.js
 - you can make a new account, or use a premade one:
   username: Jo
