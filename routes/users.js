@@ -109,4 +109,45 @@ router.get("/browse", async (req, res) => {
 });
 */
 
+router.get("/search", async (req, res) => {
+	if (req.cookies && req.cookies.AuthCookie) {
+		res.render("pages/search");
+	}
+	else {
+		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
+	}
+});
+
+// form page to let a user search for a product in the database
+router.post("/search", async (req, res) => {
+	const term = req.body.keywords;
+	const plist = await productData.getAllProducts();
+	if (req.cookies && req.cookies.AuthCookie) {
+		if (!term) {
+			res.render("pages/search", {messages: "you need to enter a term to search."});
+		}
+		else {
+			for (var i = 0; i < plist.length; i++) {
+				if (plist[i].productName.includes(term)) {
+					const product = plist[i];
+					res.render('pages/product', 
+						{
+							productid: product._id,
+							productName: product.productName,
+							brand: product.brand,
+							effects: product.effects,
+							price: product.price,
+							reviews: product.reviews
+						});
+					return;
+				}
+			}
+		}
+		
+	}
+	else {
+		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
+	}
+});
+
 module.exports = router;
