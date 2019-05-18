@@ -18,7 +18,8 @@
 	{{/if}}
 	<br>
 	<h2>suggested searches for you are: </h2>
-	<p><label>previously, you have searched for: {{prevsearches}}</label></p> <br>
+	<p><label>previously, you have searched for:</label></p>
+	-{{#each prevsearches}}{{this}}-{{/each}}
 </main>
 <footer>
 	<h2>or, if you don't want to search for anything: </h2>

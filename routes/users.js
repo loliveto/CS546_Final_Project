@@ -85,7 +85,7 @@ router.get("/private", async (req, res) => {
 			res.render('pages/profile',
 				{
 					name: un.profile.name,
-					prev_searches: un.profile.previousSearches,
+					prevsearches: un.profile.prevSearches,
 					likes: un.profile.likes,
 					dislikes: un.profile.dislikes
 				});
@@ -111,10 +111,12 @@ router.get("/browse", async (req, res) => {
 
 router.get("/search", async (req, res) => {
 	if (req.cookies && req.cookies.AuthCookie) {
-		res.render("pages/search");
+		const user = await data.getUserById(req.cookies.AuthCookie);
+		let reslist = [];
+		res.render("pages/search", {resultList: reslist, prevsearches: user.profile.prevSearches});
 	}
 	else {
-		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
+		res.status(403).json({messages: "you need to be logged in to see this page."});
 	}
 });
 
@@ -122,12 +124,14 @@ router.get("/search", async (req, res) => {
 router.post("/search", async (req, res) => {
 	const term = req.body.keywords;
 	const plist = await productData.getAllProducts();
+	const user = await data.getUserById(req.cookies.AuthCookie);
 	let reslist = [];
 	if (req.cookies && req.cookies.AuthCookie) {
 		if (!term) {
-			res.render("pages/search", {messages: "you need to enter a term to search."});
+			res.render("pages/search", {messages: "you need to enter a term to search.", prevsearches: user.profile.prevSearches});
 		}
 		else {
+			await data.addPrevSearch(req.cookies.AuthCookie, term);
 			plist.forEach(prod => {
 				if(prod.productName === term || prod.brand === term){
 					reslist.push(prod);
@@ -141,9 +145,9 @@ router.post("/search", async (req, res) => {
 			});
 		}
 		if (reslist.length == 0) {
-			res.render("pages/search", {term: term});
+			res.render("pages/search", {term: term, prevsearches: user.profile.prevSearches});
 		}else{
-			res.render("pages/search",{resultList: reslist});
+			res.render("pages/search",{resultList: reslist, prevsearches: user.profile.prevSearches});
 		}
 	}
 	else {

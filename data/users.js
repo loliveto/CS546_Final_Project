@@ -156,6 +156,9 @@ module.exports = {
         updatedUser = await this.getUserById(id);
         const userCollection = await users();
         updatedUser.profile.prevSearches.push(search);
+        if(updatedUser.profile.prevSearches.length > 5){
+            updatedUser.profile.prevSearches.shift();
+        }
 
         let updateCommand = {
             $set: updatedUser
