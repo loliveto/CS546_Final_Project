@@ -73,3 +73,8 @@ img {
   text-decoration: underline;
   letter-spacing:1.2px;
 }
+
+ul, li {
+  list-style-type: none;
+  padding: 0px;
+}

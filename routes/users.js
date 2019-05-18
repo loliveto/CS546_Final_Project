@@ -112,7 +112,7 @@ router.get("/browse", async (req, res) => {
 router.get("/search", async (req, res) => {
 	if (req.cookies && req.cookies.AuthCookie) {
 		const user = await data.getUserById(req.cookies.AuthCookie);
-		let reslist = [];
+		let reslist = [""];
 		res.render("pages/search", {resultList: reslist, prevsearches: user.profile.prevSearches});
 	}
 	else {
@@ -128,7 +128,8 @@ router.post("/search", async (req, res) => {
 	let reslist = [];
 	if (req.cookies && req.cookies.AuthCookie) {
 		if (!term) {
-			res.render("pages/search", {messages: "you need to enter a term to search.", prevsearches: user.profile.prevSearches});
+			reslist = [""];
+			res.render("pages/search", {resultList: reslist, messages: "you need to enter a term to search.", prevsearches: user.profile.prevSearches});
 		}
 		else {
 			await data.addPrevSearch(req.cookies.AuthCookie, term);
@@ -143,15 +144,15 @@ router.post("/search", async (req, res) => {
 					})
 				}
 			});
-		}
-		if (reslist.length == 0) {
-			res.render("pages/search", {term: term, prevsearches: user.profile.prevSearches});
-		}else{
-			res.render("pages/search",{resultList: reslist, prevsearches: user.profile.prevSearches});
+			if (reslist.length == 0) {
+				res.render("pages/search", {term: term, prevsearches: user.profile.prevSearches});
+			}else{
+				res.render("pages/search", {resultList: reslist, prevsearches: user.profile.prevSearches});
+			}
 		}
 	}
 	else {
-		res.status(403).json({layout: false, messages: "you need to be logged in to see this page."});
+		res.status(403).json({messages: "you need to be logged in to see this page."});
 	}
 });
 
