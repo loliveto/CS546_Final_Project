@@ -17,6 +17,7 @@ router.get("/:id", async (req, res) => {
 				brand: product.brand,
 				effects: product.effects,
 				price: product.price,
+				relatedProducts: product.relatedProducts,
 				reviews: product.reviews
 			});
 	}
