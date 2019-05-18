@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 		res.redirect("/private");
 	}
 	else {
-		res.render("pages/login", { layout: false });
+		res.render("pages/login");
 	}
 });
 
