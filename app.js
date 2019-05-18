@@ -9,6 +9,7 @@ const products = require("./data/products");
 const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require('bcrypt');
 const saltrounds = 16;
+const static = express.static(__dirname + "/public");
 
 const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -16,6 +17,8 @@ app.set("view engine", "handlebars");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+
+app.use("/public", static);
 
 app.use(cookieParser());
 
