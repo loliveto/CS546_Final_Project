@@ -4,7 +4,8 @@
   "description": "A database of skincare products where users can search by categories, such as brand, active ingredients, type of product (cream vs mask, etc), and its usage, such as an acne cream versus a plain moisturizer.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "repository": {
     "type": "git",
