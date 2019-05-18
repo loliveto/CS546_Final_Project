@@ -129,7 +129,6 @@ router.post("/search", async (req, res) => {
 		}
 		else {
 			plist.forEach(prod => {
-				console.log(prod);
 				if(prod.productName === term || prod.brand === term){
 					reslist.push(prod);
 				}else{

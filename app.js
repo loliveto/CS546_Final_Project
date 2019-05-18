@@ -50,8 +50,6 @@ app.listen(3000, () => {
 async function main() {
     const db = await connection();
 
-    let pw = await bcrypt.hash("password", saltrounds);
-    //users.createUser(pw, "Laura");
     try {
     } catch (e) {
         console.log(e);

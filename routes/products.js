@@ -67,10 +67,10 @@ router.post("/like/:id", async (req, res) => {
 	let user = await data.getUserById(req.cookies.AuthCookie);
 	let userlikes = user.profile.likes;
 	let alreadyliked = false;
-	userlikes.forEach(like => {
+	userlikes.forEach(async like => {
 		if(like === product.productName){
 			alreadyliked = true;
-			console.log("we already like this girl");
+			await data.removeLike(user._id, product.productName);
 		}
 	});
 	if(!alreadyliked){
@@ -86,9 +86,10 @@ router.post("/dislike/:id", async (req, res) => {
 	let user = await data.getUserById(req.cookies.AuthCookie);
 	let userldisikes = user.profile.dislikes;
 	let alreadydisliked = false;
-	userldisikes.forEach(dislike => {
+	userldisikes.forEach(async dislike => {
 		if(dislike === product.productName){
 			alreadydisliked = true;
+			await data.removeDislike(user._id, product.productName);
 		}
 	});
 	if(!alreadydisliked){
