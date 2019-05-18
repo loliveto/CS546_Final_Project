@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
 
 	// user doesn't exist in database
 	if (!searchforuser) {
-		res.render("pages/login", { layout: false, messages: "error: we don't know a user with that name." });
+		res.render("pages/login", {messages: "error: we don't know a user with that name." });
 		return;
 	}
 
@@ -66,7 +66,7 @@ router.post("/signup", async (req, res) => {
 			res.render("pages/login", { SUmessages: "Sorry, somebody already has that name!" });
 		} else {
 			data.createUser(hash, sentbody.newname);
-			res.render("pages/login", { layout: false, messages: "Account created sucessfully! Log in with your new credentials." });
+			res.render("pages/login", {messages: "Account created sucessfully! Log in with your new credentials." });
 		}
 	}
 
@@ -92,14 +92,14 @@ router.get("/private", async (req, res) => {
 		}
 	}
 	else {
-		res.status(403).json({ layout: false, messages: "you need to be logged in to see this page." });
+		res.status(403).json({messages: "you need to be logged in to see this page." });
 	}
 });
 
 //allows user to logout (logout.handlebars)
 router.get("/logout", async (req, res) => {
 	res.clearCookie("AuthCookie");
-	res.render("pages/login", { layout: false, messages: "you have been logged out." })
+	res.render("pages/login", {messages: "you have been logged out." })
 });
 
 /*
