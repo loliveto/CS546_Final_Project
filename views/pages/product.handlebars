@@ -1,7 +1,8 @@
 <main>
     <img src="{{image}}" alt="this image isn't loading, but we promise it's beautiful!">
     <h1>{{productName}}</h1>
-    <h2>Brand: {{brand}}</h2>
+    <div class="proflab">
+    <p>Brand: {{brand}}</p>
     <p>Effects: </p>
     {{#if effects}}
     <ul>
@@ -15,13 +16,16 @@
     <p>None</p>
     {{/if}}
     <p>Price: {{price}}</p>
+    </div>
     <form id="like" action="/products/like/{{productid}}" method="POST">
         <button type="submit">LIKE</button>
     </form>
     <form id="dislike" action="/products/dislike/{{productid}}" method="POST">
         <button type="submit">DISLIKE</button>
     </form>
-    <p>Reviews:</p>
+    <div class="proflab">
+    <p>Reviews:</p></div>
+    <a href="/products/review/{{productid}}">Write a review!</a>
     {{#if reviews}}
     <ul>
         {{#each reviews}}
@@ -34,6 +38,8 @@
     {{else}}
     <p>No reviews yet</p>
     {{/if}}
+
+    <div class="proflab">
     <p>Related Products</p>
     {{#if relatedProducts}}
     <ul>
@@ -46,11 +52,13 @@
     {{else}}
     <p>None</p>
     {{/if}}
-    <a href="/products/review/{{productid}}">Write a review!</a>
+    <div class="proflab">
+
 </main>
 <footer>
-    <h2>or, if you don't want to search for anything: </h2>
     <ol>
+        <h2>elsewhere:</h2>
+        <li><a href="/search">search again?</a></li>
         <li><a href="/private">return to your profile?</a></li>
         <li><a href="/logout">log out now?</a></li>
     </ol>
