@@ -17,13 +17,12 @@
 	<p class="not-found">We're sorry, but no results were found for "{{term}}"</p>
 	{{/if}}
 	<br>
-	<h2>suggested searches for you are: </h2>
+	<div class="proflab">
 	<p><label>previously, you have searched for:</label></p>
-	-{{#each prevsearches}}{{this}}-{{/each}}
+	{{#each prevsearches}}{{this}} ; {{/each}}</div>
 </main>
 <footer>
 	<h2>or, if you don't want to search for anything: </h2>
-
 	<ol>
 		<li><a href="/private">return to your profile?</a></li>
 		<li><a href="/logout">log out now?</a></li>
