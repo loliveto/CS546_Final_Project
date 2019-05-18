@@ -11,6 +11,13 @@ main {
   text-align: center;
 }
 
+a {
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 9px;
+  color: #0f2544;
+}
+
 header {
   border-bottom: 1px solid #afafaf;
 }
@@ -23,6 +30,7 @@ h5,
 h6 {
   color: #333;
   margin-bottom: 5px;
+  text-align:center;
 }
 
 h1 {
@@ -74,9 +82,17 @@ img {
   font-weight: bold;
   text-decoration: underline;
   letter-spacing:1.2px;
+  font-size:15px;
 }
 
 ul, li {
   list-style-type: none;
   padding: 0px;
+}
+
+#footer {
+  display:block;
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
 }
