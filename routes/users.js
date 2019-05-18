@@ -133,7 +133,7 @@ router.post("/search", async (req, res) => {
 		else {
 			await data.addPrevSearch(req.cookies.AuthCookie, term);
 			plist.forEach(prod => {
-				if(prod.productName === term || prod.brand === term){
+				if(prod.productName.includes(term) || prod.brand === term){
 					reslist.push(prod);
 				}else{
 					prod.effects.forEach(ef => {
