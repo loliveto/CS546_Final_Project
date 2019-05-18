@@ -64,3 +64,9 @@ label {
   font-weight: bold;
   font-: underline;
 }
+
+img {
+  float: right;
+  height: 700px;
+  width: 700px;
+}
