@@ -68,7 +68,7 @@ img {
 }
 
 /* profile attributes */
-#proflab {
+.proflab {
   font-weight: bold;
   text-decoration: underline;
 }
