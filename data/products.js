@@ -37,7 +37,8 @@ module.exports = {
             effects: effects,
             relatedProducts: relatedProducts,
             price: price,
-            reviews: []
+            reviews: [],
+            image: "imagename"
         };
 
         const productCollection = await products();
