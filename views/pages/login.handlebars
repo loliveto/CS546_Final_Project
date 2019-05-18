@@ -1,28 +1,39 @@
-<h1>Welcome to Skincare Database!</h1>
-<h2>Login</h2>
-<p class="message">{{messages}}</p>
-<form id="login-form" action="/login" method="POST">
-    <label for="name">
-        Username
-        <input id="name" type="text" name="name" placeholder="Username" class="full-width-input" />
-    </label>
-    <label for="password">
-        Password
-        <input id="password" type="password" name="password" placeholder="Password" class="full-width-input" />
-    </label>
-    <button type="submit">Login</button>
-</form>
-<h2>Or Sign Up!</h2>
-<p class="message">{{SUmessages}}</p>
-<form id="signup-form" action="/signup" method="POST">
-    <label for="newname">
-        Username
-        <input id="newname" type="text" name="newname" placeholder="Username" class="full-width-input" />
-    </label>
-    <label for="newpassword">
-        Password
-        <input id="newpassword" type="password" name="newpassword" placeholder="Password" class="full-width-input" />
-    </label>
-    <button type="submit">Sign up</button>
-</form>
-<p class="error">{{error}}</p>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>skincare database</title>
+        <link rel="stylesheet" href="../../public/site.css">
+    </head>
+    <body>
+        <h1>Welcome to Skincare Database!</h1>
+        <main>
+            <h2>Login</h2>
+            <p class="message">{{messages}}</p>
+            <form id="login-form" action="/login" method="POST">
+                <label for="name">
+                    Username
+                    <input id="name" type="text" name="name" placeholder="Username" class="full-width-input" />
+                </label>
+                <label for="password">
+                    Password
+                    <input id="password" type="password" name="password" placeholder="Password" class="full-width-input" />
+                </label>
+                <button type="submit">Login</button>
+            </form>
+            <h2>Or Sign Up!</h2>
+            <p class="message">{{SUmessages}}</p>
+            <form id="signup-form" action="/signup" method="POST">
+                <label for="newname">
+                    Username
+                    <input id="newname" type="text" name="newname" placeholder="Username" class="full-width-input" />
+                </label>
+                <label for="newpassword">
+                    Password
+                    <input id="newpassword" type="password" name="newpassword" placeholder="Password" class="full-width-input" />
+                </label>
+                <button type="submit">Sign up</button>
+            </form>
+            <p class="error">{{error}}</p>
+        </main>
+   </body>
+</html>
