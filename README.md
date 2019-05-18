@@ -8,3 +8,6 @@ to run:
 - npm run seed
 - ensure all dependencies are present.
 - node app.js
+- you can make a new account, or use a premade one:
+  username: Jo
+  password: jo123
