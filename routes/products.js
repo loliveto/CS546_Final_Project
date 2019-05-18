@@ -61,4 +61,41 @@ router.post("/review/:id", async (req, res) => {
 	res.redirect(url);
 });
 
+//add a like
+router.post("/like/:id", async (req, res) => {
+	let product = await productData.getProductById(req.params.id);
+	let user = await data.getUserById(req.cookies.AuthCookie);
+	let userlikes = user.profile.likes;
+	let alreadyliked = false;
+	userlikes.forEach(like => {
+		if(like === product.productName){
+			alreadyliked = true;
+			console.log("we already like this girl");
+		}
+	});
+	if(!alreadyliked){
+		await data.addLike(user._id, product.productName);
+	}
+	let url = "/products/" + req.params.id;
+	res.redirect(url);
+});
+
+//add a dislike
+router.post("/dislike/:id", async (req, res) => {
+	let product = await productData.getProductById(req.params.id);
+	let user = await data.getUserById(req.cookies.AuthCookie);
+	let userldisikes = user.profile.dislikes;
+	let alreadydisliked = false;
+	userldisikes.forEach(dislike => {
+		if(dislike === product.productName){
+			alreadydisliked = true;
+		}
+	});
+	if(!alreadydisliked){
+		await data.addDislike(user._id, product.productName);
+	}
+	let url = "/products/" + req.params.id;
+	res.redirect(url);
+});
+
 module.exports = router;
